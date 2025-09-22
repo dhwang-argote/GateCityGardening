@@ -1,15 +1,14 @@
-// Make.com webhook configuration
-const MAKE_CONFIG = {
-    // You'll need to replace this with your actual Make.com webhook URL
-    webhookUrl: 'https://hook.us2.make.com/o939cnx6hld9eme9x13zkcvuh9mkp7yx',
-    // Optional: Add any default headers or authentication if needed
+// Vapi.ai API configuration
+const VAPI_CONFIG = {
+    apiUrl: 'https://api.vapi.ai/call',
     headers: {
         'Content-Type': 'application/json',
-        // Add other headers as needed for your Make.com webhook
+        // Replace YOUR_VAPI_API_KEY with your actual Vapi.ai API key
+        'Authorization': 'Bearer 16c06052-7abd-44e7-bb03-66accd705fd0'
     }
 };
 
-class MakeIntegration {
+class VapiIntegration {
     constructor() {
         this.button = document.getElementById('webhookButton');
         this.status = document.getElementById('status');
@@ -21,55 +20,38 @@ class MakeIntegration {
     }
     
     init() {
-        this.button.addEventListener('click', () => this.handleWebhookRequest());
+        this.button.addEventListener('click', () => this.handleApiRequest());
     }
     
-    async handleWebhookRequest() {
-        // Validate webhook URL
-        if (MAKE_CONFIG.webhookUrl === 'YOUR_MAKE_WEBHOOK_URL_HERE') {
-            this.showError('Please configure your Make.com webhook URL in script.js');
-            return;
-        }
-        
+    async handleApiRequest() {
         this.setLoading(true);
         this.hideStatus();
         this.hideResponse();
         
         try {
-            const result = await this.sendMakeWebhook();
-            this.showSuccess('Webhook request sent successfully!');
-            this.showResponse(result);
+            const result = await this.sendVapiCall();
+            this.showSuccess('API request sent successfully!');
+            // this.showResponse(result);
         } catch (error) {
-            this.showError(`Webhook request failed: ${error.message}`);
-            console.error('Make.com Webhook Error:', error);
+            this.showError(`API request failed: ${error.message}`);
+            console.error('Vapi.ai API Error:', error);
         } finally {
             this.setLoading(false);
         }
     }
     
-    async sendMakeWebhook() {
-        const requestData = [
-            {
-                "message": {
-                    "type": "tool-calls",
-                    "toolCalls": [
-                        {
-                            "type": "function",
-                            "function": {
-                                "name": "Hwang",
-                                "arguments": {
-                                    "Trigger": "Triggered"
-                                }
-                            }
-                        }
-                    ]
-                }
+    async sendVapiCall() {
+        const requestData = {
+            "assistantId": "a9ffda8d-b00e-4082-990f-7abf4ba7bf95",
+            "phoneNumberId": "7655c336-4217-44a1-8dbc-e2daf58a1799",
+            "customer": {
+                "number": "+13363920946"
             }
-        ];
+        };
 
-        const response = await fetch(MAKE_CONFIG.webhookUrl, {
+        const response = await fetch(VAPI_CONFIG.apiUrl, {
             method: 'POST',
-            headers: MAKE_CONFIG.headers,
+            headers: VAPI_CONFIG.headers,
             body: JSON.stringify(requestData)
         });
 
@@ -82,7 +64,7 @@ class MakeIntegration {
         try {
             // If responseText is empty, return a success message.
             if (!responseText) {
-                return { message: 'Webhook triggered successfully' };
+                return { message: 'API call triggered successfully' };
             }
             return JSON.parse(responseText);
         } catch (error) {
@@ -97,7 +79,7 @@ class MakeIntegration {
             this.spinner.classList.remove('hidden');
         } else {
             this.button.disabled = false;
-            this.buttonText.textContent = 'Send API Request';
+            this.buttonText.textContent = 'Trigger Call';
             this.spinner.classList.add('hidden');
         }
     }
@@ -130,55 +112,5 @@ class MakeIntegration {
 
 // Initialize the application when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new MakeIntegration();
+    new VapiIntegration();
 });
-
-// Additional utility functions for Make.com webhook operations
-class MakeWebhookUtils {
-    static async sendCustomWebhook(webhookUrl, data, headers = {}) {
-        const defaultHeaders = {
-            'Content-Type': 'application/json',
-            ...headers
-        };
-
-        const response = await fetch(webhookUrl, {
-            method: 'POST',
-            headers: defaultHeaders,
-            body: JSON.stringify(data)
-        });
-
-        const responseText = await response.text();
-
-        if (!response.ok) {
-            throw new Error(`Webhook request failed: ${responseText || response.statusText}`);
-        }
-
-        try {
-            if (!responseText) {
-                return { message: 'Webhook triggered successfully' };
-            }
-            return JSON.parse(responseText);
-        } catch {
-            return { message: responseText };
-        }
-    }
-    
-    static async sendWithTimestamp(webhookUrl, customData = {}) {
-        const data = {
-            timestamp: new Date().toISOString(),
-            ...customData
-        };
-        
-        return this.sendCustomWebhook(webhookUrl, data);
-    }
-    
-    static async sendUserData(webhookUrl, userData) {
-        const data = {
-            timestamp: new Date().toISOString(),
-            user: userData,
-            source: 'website'
-        };
-        
-        return this.sendCustomWebhook(webhookUrl, data);
-    }
-}
