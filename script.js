@@ -4,7 +4,7 @@ const VAPI_CONFIG = {
     headers: {
         'Content-Type': 'application/json',
         // Replace YOUR_VAPI_API_KEY with your actual Vapi.ai API key
-        'Authorization': 'Bearer 16c06052-7abd-44e7-bb03-66accd705fd0'
+        'Authorization': 'Bearer bd3219c1-a8da-4ff7-84b0-76718db88c3f'
     }
 };
 
@@ -42,8 +42,8 @@ class VapiIntegration {
     
     async sendVapiCall() {
         const requestData = {
-            "assistantId": "a9ffda8d-b00e-4082-990f-7abf4ba7bf95",
-            "phoneNumberId": "7655c336-4217-44a1-8dbc-e2daf58a1799",
+            "assistantId": "7b3ada39-9984-4b62-a9b2-7cca82871e34",
+            "phoneNumberId": "0dbcde3d-4fc6-4a56-b4b3-9a7bde3caad0",
             "customer": {
                 "number": "+13365013505"
             }

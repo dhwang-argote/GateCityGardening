@@ -6,7 +6,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(135deg, #247f00 0%, #258100 100%);
+    background: #F8F8F8;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -22,7 +22,7 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 20% 80%, rgba(36, 127, 0, 0.3) 0%, transparent 50%),
+    background: radial-gradient(circle at 20% 80%, rgba(160, 82, 45, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
     pointer-events: none;
 }
@@ -35,12 +35,12 @@ body::before {
 }
 
 .card {
-    background: #ffffff;
+    background: #000000;
     border-radius: 20px;
     padding: 40px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     text-align: center;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #333333;
     position: relative;
     overflow: hidden;
 }
@@ -64,18 +64,14 @@ body::before {
 }
 
 h1 {
-    color: #2d3748;
+    color: #ffffff;
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 10px;
-    background: linear-gradient(135deg, #247f00, #258100);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 .description {
-    color: #718096;
+    color: #f0f0f0;
     font-size: 1.1rem;
     margin-bottom: 40px;
     line-height: 1.6;
@@ -89,7 +85,7 @@ h1 {
 }
 
 .webhook-button {
-    background: linear-gradient(135deg, #247f00 0%, #258100 100%);
+    background: #A0522D;
     color: white;
     border: none;
     padding: 16px 32px;
@@ -105,12 +101,12 @@ h1 {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    box-shadow: 0 8px 25px rgba(36, 127, 0, 0.3);
+    box-shadow: 0 8px 25px rgba(160, 82, 45, 0.3);
 }
 
 .webhook-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(36, 127, 0, 0.4);
+    box-shadow: 0 12px 35px rgba(160, 82, 45, 0.4);
 }
 
 .webhook-button:active {
@@ -146,9 +142,9 @@ h1 {
 }
 
 .status.success {
-    background: rgba(36, 127, 0, 0.1);
-    color: #247f00;
-    border: 1px solid rgba(36, 127, 0, 0.2);
+    background: rgba(160, 82, 45, 0.1);
+    color: #A0522D;
+    border: 1px solid rgba(160, 82, 45, 0.2);
 }
 
 .status.error {
